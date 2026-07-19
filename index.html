@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>❤️ Just One Question ❤️</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="style.css">
+
+</head>
+
+<body>
+
+<!-- Floating Hearts -->
+<div class="hearts"></div>
+
+<!-- Main Card -->
+<div class="card">
+
+    <video
+        class="question-video"
+        src="Reply me love.mp4"
+        autoplay
+        muted
+        loop
+        playsinline>
+    </video>
+
+    <h1 class="question">
+        Will You Be Mine Forever? ❤️
+    </h1>
+
+    <p class="subtitle">
+        Think carefully... there is only one correct answer 😁
+    </p>
+
+    <div class="buttons">
+
+        <button
+            id="yesBtn"
+            class="btn yes">
+            ❤️ YES
+        </button>
+
+        <button
+            id="noBtn"
+            class="btn no">
+            NO 😒
+        </button>
+
+    </div>
+
+</div>
+
+<!-- Loading Animation -->
+
+<div id="loader" class="loader hidden">
+
+    <div class="heart"></div>
+
+    <p>Loading Love...</p>
+
+</div>
+
+<!-- Success Screen -->
+
+<div id="success" class="success hidden">
+
+    <video
+        class="success-video"
+        src="Love me.mp4"
+        autoplay
+        loop
+        playsinline>
+    </video>
+
+    <h1>I Knew It 😍❤️</h1>
+
+    <p>You just made my day 💖</p>
+
+</div>
+
+<!-- Confetti -->
+
+<canvas id="confetti"></canvas>
+
+<script src="script.js"></script>
+
+</body>
+</html>
