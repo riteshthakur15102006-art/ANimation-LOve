@@ -1,162 +1,218 @@
+/* ===========================
+   RESET
+=========================== */
+
 *{
     margin:0;
     padding:0;
     box-sizing:border-box;
 }
 
+html,
 body{
-    font-family:"Poppins",sans-serif;
-    min-height:100vh;
+    width:100%;
+    height:100%;
     overflow:hidden;
+    font-family:'Poppins',sans-serif;
+}
+
+body{
+
     display:flex;
+
     justify-content:center;
+
     align-items:center;
 
-    background:
-    linear-gradient(135deg,#ff9a9e,#fad0c4,#fad0c4,#ffd1ff);
+    background:linear-gradient(135deg,#ff9aa2,#fad0c4,#fad0c4,#ffd1ff);
 
     position:relative;
-}
-
-/* Floating Hearts Background */
-
-.hearts{
-    position:fixed;
-    inset:0;
-    pointer-events:none;
-    overflow:hidden;
-}
-
-.hearts span{
-    position:absolute;
-    bottom:-50px;
-    font-size:20px;
-    animation:floatUp linear infinite;
-    opacity:.8;
-}
-
-@keyframes floatUp{
-
-0%{
-transform:translateY(0) rotate(0deg);
-opacity:0;
-}
-
-10%{
-opacity:1;
-}
-
-100%{
-transform:translateY(-120vh) rotate(360deg);
-opacity:0;
-}
 
 }
 
-/* Card */
+/* ===========================
+   FLOATING HEARTS
+=========================== */
 
-.card{
+#heart-container{
 
-width:min(92vw,430px);
+position:fixed;
 
-padding:30px;
+left:0;
 
-border-radius:30px;
-
-background:rgba(255,255,255,.28);
-
-backdrop-filter:blur(15px);
-
-box-shadow:
-0 20px 40px rgba(0,0,0,.15);
-
-text-align:center;
-
-position:relative;
-
-z-index:10;
-
-}
-
-/* Video */
-
-.question-video{
+top:0;
 
 width:100%;
 
-border-radius:20px;
+height:100%;
 
-margin-bottom:20px;
+pointer-events:none;
+
+overflow:hidden;
+
+z-index:1;
+
+}
+
+.floating-heart{
+
+position:absolute;
+
+bottom:-50px;
+
+animation:floatHeart linear forwards;
+
+opacity:.8;
+
+}
+
+@keyframes floatHeart{
+
+0%{
+
+transform:translateY(0) scale(.8);
+
+opacity:0;
+
+}
+
+10%{
+
+opacity:1;
+
+}
+
+100%{
+
+transform:translateY(-120vh) rotate(360deg);
+
+opacity:0;
+
+}
+
+}
+
+/* ===========================
+   MAIN CARD
+=========================== */
+
+#mainCard{
+
+position:relative;
+
+z-index:5;
+
+width:min(92vw,430px);
+
+padding:28px;
+
+border-radius:28px;
+
+background:rgba(255,255,255,.25);
+
+backdrop-filter:blur(18px);
+
+-webkit-backdrop-filter:blur(18px);
+
+box-shadow:
+
+0 15px 40px rgba(0,0,0,.18);
+
+text-align:center;
+
+}
+
+/* ===========================
+   VIDEO
+=========================== */
+
+#questionVideo{
+
+width:100%;
+
+border-radius:18px;
+
+margin-bottom:22px;
 
 pointer-events:none;
 
 }
 
-/* Text */
+/* ===========================
+   TEXT
+=========================== */
 
-.question{
+#mainCard h1{
 
 font-size:34px;
 
+color:#ff2f6b;
+
 font-weight:700;
 
-color:#ff1f6b;
-
-margin-bottom:10px;
+margin-bottom:8px;
 
 }
 
-.subtitle{
-
-font-size:17px;
+#mainCard p{
 
 color:#555;
 
-margin-bottom:35px;
+font-size:16px;
+
+margin-bottom:30px;
 
 }
 
-/* Buttons Area */
+/* ===========================
+   BUTTON AREA
+=========================== */
 
-.buttons{
+#buttonArea{
 
 position:relative;
+
+width:100%;
 
 height:180px;
 
 }
 
-/* Buttons */
+/* ===========================
+   BUTTONS
+=========================== */
 
-.btn{
+button{
 
 position:absolute;
 
-padding:14px 32px;
-
 border:none;
+
+outline:none;
+
+padding:14px 30px;
+
+font-size:18px;
+
+font-weight:600;
 
 border-radius:50px;
 
 cursor:pointer;
 
-font-size:20px;
-
-font-weight:600;
-
 transition:
 
-transform .25s,
+left .18s ease,
 
-left .18s,
+top .18s ease,
 
-top .18s,
+transform .2s ease,
 
-background .3s;
+background .25s;
 
 box-shadow:
 
-0 10px 25px rgba(0,0,0,.15);
+0 8px 18px rgba(0,0,0,.15);
 
 user-select:none;
 
@@ -166,47 +222,51 @@ touch-action:none;
 
 }
 
-/* YES */
-
-.yes{
+#yesBtn{
 
 left:15%;
 
-top:70px;
+top:65px;
 
-background:#ff3b6b;
+background:#ff3d71;
 
 color:white;
 
 }
 
-.yes:hover{
+#yesBtn:hover{
 
 transform:scale(1.08);
 
 }
 
-/* NO */
-
-.no{
+#noBtn{
 
 left:60%;
 
-top:70px;
+top:65px;
 
 background:white;
 
-color:#ff3b6b;
+color:#ff3d71;
 
 }
 
-/* Loader */
+/* ===========================
+   LOADER
+=========================== */
 
-.loader{
+#loader{
 
 position:fixed;
 
-inset:0;
+left:0;
+
+top:0;
+
+width:100%;
+
+height:100%;
 
 display:flex;
 
@@ -224,29 +284,28 @@ z-index:1000;
 
 .hidden{
 
-display:none;
+display:none !important;
 
 }
 
-.heart{
+.heart-loader{
 
 width:70px;
 
 height:70px;
 
-background:#ff3b6b;
+background:#ff3d71;
 
 transform:rotate(-45deg);
 
-animation:heartbeat .8s infinite;
-
 position:relative;
+
+animation:heartbeat .8s infinite;
 
 }
 
-.heart::before,
-
-.heart::after{
+.heart-loader::before,
+.heart-loader::after{
 
 content:"";
 
@@ -256,13 +315,13 @@ width:70px;
 
 height:70px;
 
-background:#ff3b6b;
-
 border-radius:50%;
+
+background:#ff3d71;
 
 }
 
-.heart::before{
+.heart-loader::before{
 
 top:-35px;
 
@@ -270,7 +329,7 @@ left:0;
 
 }
 
-.heart::after{
+.heart-loader::after{
 
 left:35px;
 
@@ -280,128 +339,32 @@ top:0;
 
 @keyframes heartbeat{
 
-0%{transform:rotate(-45deg) scale(1);}
+0%{
 
-50%{transform:rotate(-45deg) scale(1.2);}
-
-100%{transform:rotate(-45deg) scale(1);}
+transform:rotate(-45deg) scale(1);
 
 }
 
-/* Success */
+50%{
 
-.success{
-
-position:fixed;
-
-inset:0;
-
-display:flex;
-
-flex-direction:column;
-
-justify-content:center;
-
-align-items:center;
-
-background:white;
-
-z-index:999;
-
-text-align:center;
+transform:rotate(-45deg) scale(1.2);
 
 }
 
-.success-video{
+100%{
 
-width:min(90vw,360px);
-
-border-radius:20px;
-
-margin-bottom:25px;
+transform:rotate(-45deg) scale(1);
 
 }
 
-.success h1{
-
-font-size:42px;
-
-color:#ff2d6f;
-
-margin-bottom:10px;
-
 }
 
-.success p{
+#loader h2{
 
-font-size:22px;
+margin-top:40px;
 
-color:#666;
+color:#ff3d71;
 
-}
-
-/* Confetti */
-
-#confetti{
-
-position:fixed;
-
-inset:0;
-
-pointer-events:none;
-
-z-index:998;
-
-}
-
-/* Mobile */
-
-@media(max-width:480px){
-
-.card{
-
-padding:22px;
-
-width:94vw;
-
-}
-
-.question{
-
-font-size:28px;
-
-}
-
-.subtitle{
-
-font-size:15px;
-
-}
-
-.btn{
-
-font-size:18px;
-
-padding:13px 26px;
-
-}
-
-.buttons{
-
-height:200px;
-
-}
-
-.success h1{
-
-font-size:34px;
-
-}
-
-.success p{
-
-font-size:18px;
-
-}
+font-size:24px;
 
 }
