@@ -1,287 +1,344 @@
-// =========================
-// Elements
-// =========================
+// ===============================
+// ELEMENTS
+// ===============================
 
 const yesBtn = document.getElementById("yesBtn");
 const noBtn = document.getElementById("noBtn");
 
+const mainCard = document.getElementById("mainCard");
 const loader = document.getElementById("loader");
-const success = document.getElementById("success");
+const successPage = document.getElementById("successPage");
 
-const card = document.querySelector(".card");
+const heartContainer = document.getElementById("heart-container");
 
-const hearts = document.querySelector(".hearts");
+const canvas = document.getElementById("confettiCanvas");
+const ctx = canvas.getContext("2d");
 
-const confettiCanvas = document.getElementById("confetti");
-const ctx = confettiCanvas.getContext("2d");
-
-// =========================
-// Resize Canvas
-// =========================
+// ===============================
+// CANVAS SIZE
+// ===============================
 
 function resizeCanvas() {
-    confettiCanvas.width = window.innerWidth;
-    confettiCanvas.height = window.innerHeight;
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
 }
 
 resizeCanvas();
+
 window.addEventListener("resize", resizeCanvas);
 
-// =========================
-// Funny Messages
-// =========================
+// ===============================
+// NO BUTTON MESSAGES
+// ===============================
 
-const messages = [
+const noTexts = [
 
-"No 😎",
-"Are you sure? 🥺",
-"Think Again 😭",
-"Please ❤️",
-"I'll Cry 😢",
-"Really? 😭",
-"Don't Do This 💔",
-"Last Chance 😩",
-"I Love You 🥹",
-"Pretty Please 🥺",
-"I Bought Flowers 🌹",
-"I Have Chocolates 🍫",
-"You Can't Catch Me 😝",
-"Still No? 😭",
-"I'm Fast ⚡",
-"Impossible 😎",
-"You Missed 😂",
-"Nice Try 😏",
-"Hehe 😆",
-"Click YES ❤️"
+    "No 😒",
+    "Are you sure? 🥺",
+    "Really? 😭",
+    "Think Again 😢",
+    "Please ❤️",
+    "Don't Do This 💔",
+    "I'll Cry 😭",
+    "Last Chance 😩",
+    "Pretty Please 🥹",
+    "I Bought Flowers 🌹",
+    "I Have Chocolates 🍫",
+    "Still No? 😭",
+    "Impossible 😎",
+    "You Missed 😂",
+    "Nice Try 😏",
+    "Catch Me 😝",
+    "I'm Fast ⚡",
+    "Nope 😆",
+    "Click YES ❤️"
 
 ];
 
-let attempts = 0;
+let attempt = 0;
 
-// =========================
-// Move Button
-// =========================
+// ===============================
+// YES BUTTON GROW
+// ===============================
 
-function moveButton(x = null, y = null){
+function growYesButton(){
 
-    const cardRect = card.getBoundingClientRect();
+    const scale = 1 + attempt * 0.08;
+
+    yesBtn.style.transform = `scale(${scale})`;
+
+}
+
+// ===============================
+// MOVE NO BUTTON
+// ===============================
+
+function moveNoButton(pointerX = null, pointerY = null){
+
+    const area = document.getElementById("buttonArea");
+
+    const areaRect = area.getBoundingClientRect();
 
     const btnWidth = noBtn.offsetWidth;
     const btnHeight = noBtn.offsetHeight;
 
-    let left;
-    let top;
+    let x;
+    let y;
 
-    if(x!==null && y!==null){
+    if(pointerX !== null){
 
-        const centerX = x-cardRect.left;
-        const centerY = y-cardRect.top;
+        // Escape from finger
 
-        const btnX = parseFloat(noBtn.style.left)||250;
-        const btnY = parseFloat(noBtn.style.top)||70;
+        const currentX = parseFloat(noBtn.style.left) || area.clientWidth * 0.6;
+        const currentY = parseFloat(noBtn.style.top) || 70;
 
-        let dx = btnX-centerX;
-        let dy = btnY-centerY;
+        const fingerX = pointerX - areaRect.left;
+        const fingerY = pointerY - areaRect.top;
 
-        const length = Math.sqrt(dx*dx+dy*dy)||1;
+        let dx = currentX - fingerX;
+        let dy = currentY - fingerY;
 
-        dx/=length;
-        dy/=length;
+        const distance = Math.sqrt(dx * dx + dy * dy) || 1;
 
-        left = btnX+dx*180;
-        top = btnY+dy*180;
+        dx /= distance;
+        dy /= distance;
+
+        x = currentX + dx * 170;
+        y = currentY + dy * 170;
 
     }else{
 
-        left=Math.random()*(cardRect.width-btnWidth);
-        top=Math.random()*(cardRect.height-btnHeight-20);
+        x = Math.random() * (area.clientWidth - btnWidth);
+        y = Math.random() * (area.clientHeight - btnHeight);
 
     }
 
-    left=Math.max(10,Math.min(left,cardRect.width-btnWidth-10));
-    top=Math.max(10,Math.min(top,cardRect.height-btnHeight-10));
+    x = Math.max(10, Math.min(x, area.clientWidth - btnWidth - 10));
+    y = Math.max(10, Math.min(y, area.clientHeight - btnHeight - 10));
 
-    noBtn.style.left=left+"px";
-    noBtn.style.top=top+"px";
+    noBtn.style.left = x + "px";
+    noBtn.style.top = y + "px";
 
-    attempts++;
+    attempt++;
 
-    noBtn.innerText=messages[attempts%messages.length];
+    noBtn.innerText = noTexts[attempt % noTexts.length];
 
-    yesBtn.style.transform=`scale(${1+attempts*0.08})`;
+    growYesButton();
 
 }
 
-// =========================
-// Desktop
-// =========================
+// ===============================
+// DESKTOP EVENTS
+// ===============================
 
-noBtn.addEventListener("mouseenter",()=>{
+noBtn.addEventListener("mouseenter", () => {
 
-moveButton();
+    moveNoButton();
 
 });
 
-// =========================
-// Mobile Touch
-// =========================
+noBtn.addEventListener("mouseover", () => {
 
-document.addEventListener("touchmove",(e)=>{
-
-const t=e.touches[0];
-
-const rect=noBtn.getBoundingClientRect();
-
-const cx=rect.left+rect.width/2;
-const cy=rect.top+rect.height/2;
-
-const distance=Math.hypot(
-t.clientX-cx,
-t.clientY-cy
-);
-
-if(distance<120){
-
-moveButton(t.clientX,t.clientY);
-
-}
-
-},{passive:true});
-
-// =========================
-// Extra Protection
-// =========================
-
-noBtn.addEventListener("touchstart",(e)=>{
-
-e.preventDefault();
-
-moveButton();
-
-},{passive:false});
-
-noBtn.addEventListener("click",(e)=>{
-
-e.preventDefault();
-
-moveButton();
+    moveNoButton();
 
 });
 
-// =========================
-// Floating Hearts
-// =========================
+// ===============================
+// MOBILE TOUCH
+// ===============================
 
-function createHeart(){
+document.addEventListener("touchmove", function(e){
 
-const heart=document.createElement("span");
+    const touch = e.touches[0];
 
-heart.innerHTML="❤️";
+    const rect = noBtn.getBoundingClientRect();
 
-heart.style.left=Math.random()*100+"vw";
+    const cx = rect.left + rect.width / 2;
+    const cy = rect.top + rect.height / 2;
 
-heart.style.animationDuration=4+Math.random()*5+"s";
+    const distance = Math.hypot(
 
-heart.style.fontSize=12+Math.random()*26+"px";
+        touch.clientX - cx,
+        touch.clientY - cy
 
-hearts.appendChild(heart);
+    );
 
-setTimeout(()=>{
+    if(distance < 120){
 
-heart.remove();
+        moveNoButton(
 
-},9000);
+            touch.clientX,
+            touch.clientY
 
-}
+        );
 
-setInterval(createHeart,350);
+    }
 
-// =========================
-// Confetti
-// =========================
+}, { passive: true });
 
-const pieces=[];
+noBtn.addEventListener("touchstart", function(e){
 
-function random(min,max){
+    e.preventDefault();
 
-return Math.random()*(max-min)+min;
+    moveNoButton();
 
-}
+}, { passive: false });
 
-function createConfetti(){
+noBtn.addEventListener("click", function(e){
 
-for(let i=0;i<220;i++){
+    e.preventDefault();
 
-pieces.push({
-
-x:random(0,confettiCanvas.width),
-
-y:random(-400,0),
-
-size:random(5,10),
-
-speed:random(2,7),
-
-angle:random(0,360),
-
-rotation:random(-5,5),
-
-color:`hsl(${Math.random()*360},90%,60%)`
+    moveNoButton();
 
 });
 
-}
+
+// ===============================
+// FLOATING HEARTS
+// ===============================
+
+function createHeart() {
+
+    const heart = document.createElement("div");
+
+    heart.className = "floating-heart";
+
+    heart.innerHTML = "❤️";
+
+    heart.style.left = Math.random() * 100 + "vw";
+
+    heart.style.fontSize = (16 + Math.random() * 24) + "px";
+
+    heart.style.animationDuration = (4 + Math.random() * 4) + "s";
+
+    heartContainer.appendChild(heart);
+
+    setTimeout(() => {
+
+        heart.remove();
+
+    }, 8000);
 
 }
 
-function drawConfetti(){
+setInterval(createHeart, 350);
 
-ctx.clearRect(0,0,confettiCanvas.width,confettiCanvas.height);
+// ===============================
+// CONFETTI
+// ===============================
 
-pieces.forEach(p=>{
+const confetti = [];
 
-ctx.save();
+function random(min, max) {
+    return Math.random() * (max - min) + min;
+}
 
-ctx.translate(p.x,p.y);
+function launchConfetti() {
 
-ctx.rotate(p.angle);
+    confetti.length = 0;
 
-ctx.fillStyle=p.color;
+    for (let i = 0; i < 250; i++) {
 
-ctx.fillRect(-p.size/2,-p.size/2,p.size,p.size);
+        confetti.push({
 
-ctx.restore();
+            x: random(0, canvas.width),
 
-p.y+=p.speed;
+            y: random(-canvas.height, 0),
 
-p.angle+=p.rotation;
+            w: random(6, 12),
 
-});
+            h: random(6, 12),
 
-requestAnimationFrame(drawConfetti);
+            dx: random(-2, 2),
+
+            dy: random(3, 8),
+
+            rot: random(0, Math.PI * 2),
+
+            dr: random(-0.2, 0.2),
+
+            color: `hsl(${Math.random() * 360},90%,60%)`
+
+        });
+
+    }
+
+}
+
+function drawConfetti() {
+
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    confetti.forEach(piece => {
+
+        piece.x += piece.dx;
+        piece.y += piece.dy;
+        piece.rot += piece.dr;
+
+        ctx.save();
+
+        ctx.translate(piece.x, piece.y);
+
+        ctx.rotate(piece.rot);
+
+        ctx.fillStyle = piece.color;
+
+        ctx.fillRect(
+            -piece.w / 2,
+            -piece.h / 2,
+            piece.w,
+            piece.h
+        );
+
+        ctx.restore();
+
+    });
+
+    requestAnimationFrame(drawConfetti);
 
 }
 
 drawConfetti();
 
-// =========================
-// YES
-// =========================
+// ===============================
+// YES BUTTON
+// ===============================
 
-yesBtn.addEventListener("click",()=>{
+yesBtn.addEventListener("click", () => {
 
-card.style.display="none";
+    mainCard.classList.add("hidden");
 
-loader.classList.remove("hidden");
+    loader.classList.remove("hidden");
 
-setTimeout(()=>{
+    setTimeout(() => {
 
-loader.classList.add("hidden");
+        loader.classList.add("hidden");
 
-success.classList.remove("hidden");
+        successPage.classList.remove("hidden");
 
-createConfetti();
+        successPage.classList.add("fade-in");
 
-},2500);
+        launchConfetti();
+
+        const loveVideo = document.getElementById("loveVideo");
+
+        if (loveVideo) {
+
+            loveVideo.play().catch(() => {});
+
+        }
+
+    }, 2500);
+
+});
+
+// ===============================
+// INITIAL POSITION
+// ===============================
+
+window.addEventListener("load", () => {
+
+    noBtn.style.left = "60%";
+    noBtn.style.top = "65px";
 
 });
