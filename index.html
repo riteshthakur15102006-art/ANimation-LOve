@@ -1,97 +1,133 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
 
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
 
-<title>❤️ Just One Question ❤️</title>
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
 
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <title>❤️ Do You Love Me?</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="preconnect"
+          href="https://fonts.googleapis.com">
 
-<link rel="stylesheet" href="style.css">
+    <link rel="preconnect"
+          href="https://fonts.gstatic.com"
+          crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+          rel="stylesheet">
+
+    <link rel="stylesheet"
+          href="style.css">
 
 </head>
 
 <body>
 
 <!-- Floating Hearts -->
-<div class="hearts"></div>
+<div id="heart-container"></div>
 
 <!-- Main Card -->
-<div class="card">
+<div id="mainCard">
 
     <video
-        class="question-video"
-        src="Reply me love.mp4"
+        id="questionVideo"
         autoplay
         muted
         loop
         playsinline>
+
+        <source src="Reply me love.mp4"
+                type="video/mp4">
+
     </video>
 
-    <h1 class="question">
-        Will You Be Mine Forever? ❤️
+    <h1>
+
+        Do You Love Me? ❤️
+
     </h1>
 
-    <p class="subtitle">
-        Think carefully... there is only one correct answer 😁
+    <p>
+
+        There is only one correct answer 😏
+
     </p>
 
-    <div class="buttons">
+    <div id="buttonArea">
 
         <button
-            id="yesBtn"
-            class="btn yes">
+            id="yesBtn">
+
             ❤️ YES
+
         </button>
 
         <button
-            id="noBtn"
-            class="btn no">
+            id="noBtn">
+
             NO 😒
+
         </button>
 
     </div>
 
 </div>
 
-<!-- Loading Animation -->
+<!-- Loader -->
 
-<div id="loader" class="loader hidden">
+<div id="loader"
+     class="hidden">
 
-    <div class="heart"></div>
+    <div class="heart-loader"></div>
 
-    <p>Loading Love...</p>
+    <h2>
+
+        Loading Love...
+
+    </h2>
 
 </div>
 
-<!-- Success Screen -->
+<!-- Success Page -->
 
-<div id="success" class="success hidden">
+<div id="successPage"
+     class="hidden">
 
     <video
-        class="success-video"
-        src="Love me.mp4"
+        id="loveVideo"
         autoplay
         loop
         playsinline>
+
+        <source src="Love me.mp4"
+                type="video/mp4">
+
     </video>
 
-    <h1>I Knew It 😍❤️</h1>
+    <h1>
 
-    <p>You just made my day 💖</p>
+        I Knew It 😍❤️
+
+    </h1>
+
+    <p>
+
+        You made my day 💖
+
+    </p>
 
 </div>
 
 <!-- Confetti -->
 
-<canvas id="confetti"></canvas>
+<canvas id="confettiCanvas"></canvas>
 
 <script src="script.js"></script>
 
 </body>
+
 </html>
